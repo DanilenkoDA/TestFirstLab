@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .result { margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <h1>Калькулятор API</h1>
+
+    <div>
+        <input type="number" id="a" placeholder="Число A" required>
+        <input type="number" id="b" placeholder="Число B" required>
+    </div>
+
+    <div>
+        <button onclick="calculate('add')">Сложение</button>
+        <button onclick="calculate('subtract')">Вычитание</button>
+        <button onclick="calculate('multiply')">Умножение</button>
+        <button onclick="calculate('divide')">Деление</button>
+        <button onclick="calculate('modulus')">Модуль</button>
+        <button onclick="calculate('exponentiation')">Возведение в степень</button>
+        <button onclick="calculateSqrt()">Квадратный корень</button>
+    </div>
+
+    <div class="result" id="result"></div>
+
+    <script>
+        async function calculate(operation) {
+            const a = document.getElementById('a').value;
+            const b = document.getElementById('b').value;
+
+            const response = await fetch(`/${operation}?a=${a}&b=${b}`);
+            const data = await response.json();
+            displayResult(data);
+        }
+
+        async function calculateSqrt() {
+            const a = document.getElementById('a').value;
+
+            const response = await fetch(`/sqrt?a=${a}`);
+            const data = await response.json();
+            displayResult(data);
+        }
+
+        function displayResult(data) {
+            const resultDiv = document.getElementById('result');
+            if (data.result !== undefined) {
+                resultDiv.textContent = `Результат: ${data.result}`;
+            } else if (data.error !== undefined) {
+                resultDiv.textContent = `Ошибка: ${data.error}`;
+            }
+        }
+    </script>
+
+</body>
+</html>
