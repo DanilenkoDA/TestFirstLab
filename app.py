@@ -14,18 +14,22 @@ def multiply(a, b):
 
 def divide(a, b):
     if b == 0:
-        return 'Error: Division by zero'
+        raise(ValueError)
     return a / b
 
 def modulus(a, b):
+    if b == 0:
+        raise(ValueError)
     return a % b
 
 def exponentiation(a, b):
+    if a == 0 and b == 0:
+        raise(ValueError)
     return a ** b
 
 def square_root(a):
     if a < 0:
-        return 'Error: Square root of negative number'
+        raise(ValueError)
     return math.sqrt(a)
 
 @app.route('/')
